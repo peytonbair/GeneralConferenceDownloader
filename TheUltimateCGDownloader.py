@@ -1,13 +1,12 @@
 import wget, requests, re, os
 from mutagen.easyid3 import EasyID3
-from time import sleep
 from bs4 import BeautifulSoup
 
 CONF_URL = "https://www.churchofjesuschrist.org/study/general-conference/"
 
 def main():
     #get user input
-    lang = "eng" #str(input("Download Language: ")
+    lang = str(input("Download Language: "))
     start = int(input("Start Year: "))
     end = int(input("End Year: "))
     try:
@@ -76,7 +75,6 @@ class Discursos():
         except:
             return None
     def changeAlbum(self):
-        audio = EasyID3(self.path)
         year = self.url[self.url.find("conference/") + 11:self.url.find("conference/") + 15]
         month = self.url[self.url.find("conference/") + 16:self.url.find("conference/") + 18]
         print(month)
@@ -84,9 +82,13 @@ class Discursos():
             tempAlb = "April " + str(year) + " General Conference"
         else:
             tempAlb = "October " + str(year) + " General Conference"
-        audio["title"] = self.name
-        audio["album"] = tempAlb              
-        audio.save()
+        try:
+            audio = EasyID3(self.path)
+            audio["title"] = self.name
+            audio["album"] = tempAlb              
+            audio.save()
+        except:
+            print("dang it")
 
        
     def get_name(self):
@@ -156,6 +158,10 @@ class Discursos():
         return tempStr
 
 main()
+
+
+
+
 
 
 
