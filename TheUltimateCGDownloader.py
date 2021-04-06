@@ -1,3 +1,6 @@
+#Made with love by Elder Bair y Elder Bell. 5 De Abril 2021
+#Sorry for the lack of commenting, we were short on time and resources. 
+
 import wget, requests, re, os
 from mutagen.easyid3 import EasyID3
 from bs4 import BeautifulSoup
@@ -57,14 +60,14 @@ class Discursos():
 
 
     def descargar(self):
-        if self.download_url != None:
+        if self.download_url != None and not os.path.isfile(self.path):
             try:
                 wget.download(self.download_url, self.path)
                 
             except:
                 os.mkdir("Discursos/"+ self.speaker)
                 wget.download(self.download_url, self.path)
-            self.changeAlbum()
+        self.changeAlbum()
             
     def url_parser(self):
         try:
@@ -74,6 +77,7 @@ class Discursos():
                     return output
         except:
             return None
+
     def changeAlbum(self):
         year = self.url[self.url.find("conference/") + 11:self.url.find("conference/") + 15]
         month = self.url[self.url.find("conference/") + 16:self.url.find("conference/") + 18]
@@ -85,6 +89,7 @@ class Discursos():
         try:
             audio = EasyID3(self.path)
             audio["title"] = self.name
+            audio["artist"] = self.speaker
             audio["album"] = tempAlb              
             audio.save()
         except:
@@ -158,6 +163,3 @@ class Discursos():
         return tempStr
 
 main()
-
-
-
