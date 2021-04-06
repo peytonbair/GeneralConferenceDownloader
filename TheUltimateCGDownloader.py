@@ -70,7 +70,7 @@ class Discursos():
         try:
             for link in self.soup.find_all('a'):
                 output = link.get('href')
-                if "media2" in output:
+                if "media2" in output and "general-conference" in output:
                     return output
         except:
             return None
@@ -158,10 +158,6 @@ class Discursos():
         return tempStr
 
 main()
-
-
-
-
 
 
 
