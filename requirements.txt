@@ -1,2 +1,0 @@
-mutagen==1.40.0
-beautifulsoup4==4.9.3
